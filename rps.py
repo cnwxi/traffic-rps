@@ -1,10 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-import numpy as np
 import torch
-from torchvision import transforms, datasets
-from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import torch.nn as nn
