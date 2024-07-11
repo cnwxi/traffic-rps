@@ -112,9 +112,18 @@ model = RPSNet()
 print(model)
 
 # 检查CUDA是否可用，据此设置设备
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+if torch.cuda.is_available(): # 英伟达GPU
+    print("Using GPU for training")
+    devvice = torch.device("cuda")
+elif torch.backends.mps.is_available(): # Apple M芯片
+        print("Using NPU for training")
+        device = torch.device("mps")
+else: # CPU
+    print("Using CPU for training")
+    device = torch.device("cpu")
 model = model.to(device)  # 将模型移动到指定的设备上
+
 # 定义损失函数和优化器
 loss_function = nn.CrossEntropyLoss()
 optimizer = torch.optim.RMSprop(model.parameters(), lr=1e-4)
