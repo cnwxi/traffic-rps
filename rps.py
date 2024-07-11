@@ -119,6 +119,10 @@ model = model.to(device)  # 将模型移动到指定的设备上
 loss_function = nn.CrossEntropyLoss()
 optimizer = torch.optim.RMSprop(model.parameters(), lr=1e-4)
 
+# 创建保存模型权重的文件夹
+if not os.path.exists("./weight"):
+    os.makedirs("./weight")
+
 # 训练网络模型
 def train_model(model, train_loader, validation_loader, epochs):
     writer = SummaryWriter('./runs/rps_log')  # 初始化SummaryWriter
@@ -201,11 +205,12 @@ def predict_image(model, image_path):
 
 
 label_map = {0: "paper", 1: "rock", 2: "scissors"}
-for i in range(5):
-    plt.subplot(1, 5, i + 1)
-    image_path = f"./rps/test/{i+1}.png"
-    img=mpimg.imread(f"./rps/test/{i+1}.png")
-    plt.imshow(img)
-    plt.title(label_map[predict_image(model, image_path)])
-    plt.axis('Off')
-plt.show()
+with torch.no_grad():
+    for i in range(5):
+        plt.subplot(1, 5, i + 1)
+        image_path = f"./rps/test/{i+1}.png"
+        img=mpimg.imread(f"./rps/test/{i+1}.png")
+        plt.imshow(img)
+        plt.title(label_map[predict_image(model, image_path)])
+        plt.axis('Off')
+    plt.show()
