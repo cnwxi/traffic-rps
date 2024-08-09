@@ -112,7 +112,7 @@ print(model)
 # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 if torch.cuda.is_available(): # 英伟达GPU
     print("Using GPU for training")
-    devvice = torch.device("cuda")
+    device = torch.device("cuda")
 elif torch.backends.mps.is_available(): # Apple M芯片
         print("Using NPU for training")
         device = torch.device("mps")
